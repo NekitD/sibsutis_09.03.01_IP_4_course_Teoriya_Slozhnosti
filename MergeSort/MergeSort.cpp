@@ -146,7 +146,7 @@ void MergeSort(queque *&A){
     ques->head = q;
     ques->tail = q;
     PrintQueque(q); 
-    cout << endl;
+    cout << " | ";
     while(p != NULL){
         q = new queque;
         q->head = p;
@@ -158,8 +158,9 @@ void MergeSort(queque *&A){
         ques->tail->next = q;
         ques->tail = q;
         PrintQueque(q);
-        cout << endl;
+        cout << " | ";
     }
+    cout << endl;
     delete A;
     A = NULL;
     cout << "================================================" << endl;
@@ -172,7 +173,7 @@ void MergeSort(queque *&A){
         new_ques->tail = new_q;
         new_ques->tail->next = NULL;
         PrintQueque(new_q); 
-        cout << endl;
+        cout << " | ";
         q = q->next->next;
         while(q != NULL){
             new_q = Merge(q, q->next);
@@ -180,11 +181,12 @@ void MergeSort(queque *&A){
             new_ques->tail = new_q;
             new_ques->tail->next = NULL;
             PrintQueque(new_q); 
-            cout << endl; 
+            cout << " | "; 
             q = q->next->next;
         }
         ques = new_ques;
         new_ques = NULL;
+        cout << endl;
         cout << "================================================" << endl;      
     }
     A = ques->head;
