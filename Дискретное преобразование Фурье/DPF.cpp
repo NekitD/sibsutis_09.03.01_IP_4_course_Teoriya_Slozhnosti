@@ -1,0 +1,114 @@
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+
+// #define pi 3.1415926535
+#define pi 3.14
+
+using namespace std;
+
+typedef struct complex {
+    double real;
+    double image;
+} complex;
+
+void DPF_forward(double f[], complex A[], int N);
+void DPF_backward(double f[], complex A[], int N);
+
+
+void ComplexSum(complex& z1, complex z2){
+    z1.real = z1.real + z2.real;
+    z1.image = z1.image + z2.image;
+}
+
+void ComplexMulConst(complex& z, double c){
+    z.real = z.real * c;
+    z.image = z.image * c;
+}
+
+void ComplexMulComplex(complex& z1, complex z2){
+    complex res; 
+    res.real = (z1.real * z2.real) - (z1.image * z2.image);
+    res.image = (z1.real * z2.image) + (z2.real * z1.image);
+    z1.real = res.real;
+    z1.image = res.image;
+}
+
+
+void PrintComplex(complex z){
+    cout << z.real << " + (" << z.image << ")*i";
+}
+
+void PrintComplexArray(complex Z[], int n){
+    for(int i = 0; i < n; i++){
+        PrintComplex(Z[i]);
+        cout << "   ";
+    }
+}
+
+void PrintArray(double A[], int n){
+    for(int i = 0; i < n; i++){
+        cout << A[i] << " ";
+    }
+}
+
+int main()
+{
+    cout.precision(9);
+    srand(time(NULL));
+    int k;
+    cout << "n = 2^k" << endl;
+    cout << "Input k: ";
+    cin >> k;
+    int n = pow(2, k);
+    double f[n];
+    complex A[n];
+
+    for(int i = 0; i < n; i++){
+        f[i] = rand() % 100;
+    }
+
+    cout << "Default array:" << endl;
+    PrintArray(f, n);
+    cout << endl;
+    DPF_forward(f, A, n);
+    cout << "Fourier forward array:" << endl;
+    PrintComplexArray(A, n);
+    DPF_backward(f, A, n);
+    cout << endl;
+    cout << "Fourier backward array:" << endl;
+    PrintArray(f, n);
+}
+
+void DPF_forward(double f[], complex A[], int N){
+    for(int k = 0; k < N; k++){
+        A[k].real = 0;
+        A[k].image = 0;
+        for(int j = 0; j < N; j++){
+            complex e;
+            double angle = (2.0 * pi) * ((double)(k*j)/N);
+            e.real = cos(-angle);
+            e.image = sin(-angle);
+            ComplexMulConst(e, f[j]);
+            ComplexSum(A[k], e);
+        }
+        ComplexMulConst(A[k], (1.0/N));
+    }
+}
+void DPF_backward(double f[], complex A[], int N){
+    for(int k = 0; k < N; k++){
+        complex new_f;
+        new_f.real = 0;
+        new_f.image = 0;
+        for(int j = 0; j < N; j++){
+            complex e;
+            double angle = (2.0 * pi) * ((double)(k*j)/N);
+            e.real = cos(angle);
+            e.image = sin(angle);
+            ComplexMulComplex(e, A[j]);
+            ComplexSum(new_f, e);
+        }
+        f[k] = new_f.real;
+    }
+}
