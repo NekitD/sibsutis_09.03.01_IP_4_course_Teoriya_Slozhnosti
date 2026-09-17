@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 // #define pi 3.1415926535
-#define pi 3.14
+#define pi 3.141592
 
 using namespace std;
 
@@ -55,7 +55,7 @@ void PrintArray(double A[], int n){
 
 int main()
 {
-    cout.precision(9);
+    cout.precision(7);
     srand(time(NULL));
     int k;
     cout << "n = 2^k" << endl;
@@ -72,16 +72,19 @@ int main()
     cout << "Default array:" << endl;
     PrintArray(f, n);
     cout << endl;
+    cout << endl;
     DPF_forward(f, A, n);
     cout << "Fourier forward array:" << endl;
     PrintComplexArray(A, n);
-    DPF_backward(f, A, n);
     cout << endl;
+    cout << endl;
+    DPF_backward(f, A, n);
     cout << "Fourier backward array:" << endl;
     PrintArray(f, n);
 }
 
 void DPF_forward(double f[], complex A[], int N){
+    int m_counter = 0;
     for(int k = 0; k < N; k++){
         A[k].real = 0;
         A[k].image = 0;
@@ -91,12 +94,15 @@ void DPF_forward(double f[], complex A[], int N){
             e.real = cos(-angle);
             e.image = sin(-angle);
             ComplexMulConst(e, f[j]);
+            m_counter++;
             ComplexSum(A[k], e);
         }
         ComplexMulConst(A[k], (1.0/N));
     }
+    cout << "Forward mul count = " << m_counter << endl;
 }
 void DPF_backward(double f[], complex A[], int N){
+    int m_counter = 0;
     for(int k = 0; k < N; k++){
         complex new_f;
         new_f.real = 0;
@@ -107,8 +113,10 @@ void DPF_backward(double f[], complex A[], int N){
             e.real = cos(angle);
             e.image = sin(angle);
             ComplexMulComplex(e, A[j]);
+            m_counter++;
             ComplexSum(new_f, e);
         }
         f[k] = new_f.real;
     }
+    cout << "Backward mul count = " << m_counter << endl;
 }
