@@ -2,6 +2,8 @@
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
+#include <sstream>
 
 // #define pi 3.1415926535
 #define pi 3.141592
@@ -60,7 +62,7 @@ int main()
     srand(time(NULL));
     int k;
     cout << "n = 2^k" << endl;
-    cout << "Input k: ";
+    cout << "Input n: ";
     cin >> k;
     int n = pow(2, k);
     double f[n], f_final[n];
@@ -114,12 +116,48 @@ void DPF_backward(double f[], complex A[], int N){
 }
 
 void PrintResults(double f[], complex A[], double f_final[], int N){
-    cout << "|      Default     |               Forward             |        Backward        |" << endl;
-    cout << "=======================================================================" << endl;
+    cout << "\n";
+    cout << "+" << string(6, '-') << "+"
+         << string(22, '-') << "+"
+         << string(28, '-') << "+"
+         << string(22, '-') << "+" << endl;
+
+    cout << "|" << setw(6) << "  i  " << "|"
+         << setw(22) << "Default" << "|"
+         << setw(28) << "Forward" << "|"
+         << setw(22) << "Backward" << "|" << endl;
+
+    cout << "+" << string(6, '-') << "+"
+         << string(22, '-') << "+"
+         << string(28, '-') << "+"
+         << string(22, '-') << "+" << endl;
+
+
     for(int i = 0; i < N; i++){
-        cout << "      " << f[i] << "           ";
-        PrintComplex(A[i]);
-        cout << "                     " << f_final[i] << "         ";
+        cout << "|" << setw(6) << i << "|";
+        cout << setw(22) << fixed << f[i] << "|";
+
+        ostringstream oss;
+        oss.precision(cout.precision());
+        oss << fixed
+            << A[i].real << (A[i].image >= 0 ? " + " : "")
+            << A[i].image << "*i";
+        cout << setw(28) << oss.str() << "|";
+
+        cout << setw(22) << fixed << f_final[i] << "|";
+
         cout << endl;
-    } 
+
+        if(i < N - 1){
+            cout << "+" << string(6, '-') << "+"
+                 << string(22, '-') << "+"
+                 << string(28, '-') << "+"
+                 << string(22, '-') << "+" << endl;
+        }
+    }
+    cout << "+" << string(6, '-') << "+"
+         << string(22, '-') << "+"
+         << string(28, '-') << "+"
+         << string(22, '-') << "+" << endl;
+    cout << endl;
 }
