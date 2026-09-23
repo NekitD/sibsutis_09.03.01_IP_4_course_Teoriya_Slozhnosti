@@ -44,7 +44,7 @@ int main()
     complex A[n];
 
     for(int i = 0; i < n; i++){
-        f[i] = rand() % 100;
+        f[i] = rand() % 10;
     }
 
     HalfFast_forward(f, A, n, p1, p2);
@@ -104,12 +104,10 @@ void HalfFast_backward(double f[], complex A2[], int N, int p1, int p2){
             A1[k1*p2 + j2].image = 0;
             for(int k2 = 0; k2 < p2; k2++){
                 complex e;
-                double angle = (2.0 * pi)
-                    * ((double)j2 / (p1 * p2))
-                    * (k1 + p1 * k2);
+                double angle = (2.0 * pi) * ((double)j2 / (p1 * p2)) * (k1 + p1 * k2);
                 e.real = cos(angle);
                 e.image = sin(angle);
-                ComplexMulComplex(e, A2[k1*p2 + k2]);   // <-- читаем A2 по k2
+                ComplexMulComplex(e, A2[k1*p2 + k2]);
                 m_counter++;
                 ComplexSum(A1[k1*p2 + j2], e);
             }
@@ -123,8 +121,7 @@ void HalfFast_backward(double f[], complex A2[], int N, int p1, int p2){
             new_f.image = 0;
             for(int k1 = 0; k1 < p1; k1++){
                 complex e;
-                double angle = (2.0 * pi)
-                    * ((double)(j1 * k1) / p1);
+                double angle = (2.0 * pi) * ((double)(j1 * k1) / p1);
                 e.real = cos(angle);
                 e.image = sin(angle);
                 ComplexMulComplex(e, A1[k1*p2 + j2]);
