@@ -60,11 +60,9 @@ int main()
 {
     cout.precision(7);
     srand(time(NULL));
-    int k;
-    cout << "n = 2^k" << endl;
+    int n;
     cout << "Input n: ";
-    cin >> k;
-    int n = pow(2, k);
+    cin >> n;
     double f[n], f_final[n];
     complex A[n];
 
