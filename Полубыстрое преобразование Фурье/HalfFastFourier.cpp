@@ -44,7 +44,7 @@ int main()
     complex A[n];
 
     for(int i = 0; i < n; i++){
-        f[i] = rand() % 10;
+        f[i] = rand() % 100;
     }
 
     HalfFast_forward(f, A, n, p1, p2);
