@@ -69,8 +69,7 @@ void HalfFast_forward(double f[], complex A2[], int N, int p1, int p2){
                 m_counter++;
                 ComplexSum(A1[k1*p2 + j2], e);
             }
-            ComplexMulConst(A1[k1*p2 + j2], (1.0/p1)); 
-            //m_counter++;     
+            ComplexMulConst(A1[k1*p2 + j2], (1.0/p1));      
         } 
     }
 
@@ -87,8 +86,7 @@ void HalfFast_forward(double f[], complex A2[], int N, int p1, int p2){
                 m_counter++;
                 ComplexSum(A2[k1*p2 + k2], e);
             }
-            ComplexMulConst(A2[k1*p2 + k2], (1.0/p2)); 
-            //m_counter++;     
+            ComplexMulConst(A2[k1*p2 + k2], (1.0/p2));     
         } 
     }
     cout << "Forward mul count = " << m_counter << endl;

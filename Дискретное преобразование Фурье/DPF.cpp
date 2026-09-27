@@ -60,6 +60,7 @@ int main()
 {
     cout.precision(7);
     srand(time(NULL));
+    cout << "FOURIER" << endl;
     int n;
     cout << "Input n: ";
     cin >> n;
