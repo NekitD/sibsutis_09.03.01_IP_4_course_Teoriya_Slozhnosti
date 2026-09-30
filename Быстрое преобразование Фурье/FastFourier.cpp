@@ -5,9 +5,9 @@
 #include <iomanip>
 #include <sstream>
 
-#define pi 3.1415926535
+// #define pi 3.1415926535
 // #define pi 3.141592
-// #define pi 3.14
+#define pi 3.14
 
 using namespace std;
 
@@ -16,8 +16,6 @@ typedef struct complex {
     double image;
 } complex;
 
-
-
 void Fast_forward(double f[], complex A_final[], int N, int N_real, int r);
 void FFT_forward_rec(complex in[], complex out[], int N, int& m_counter);
 
@@ -25,7 +23,7 @@ void Fast_backward(double f[], complex A_final[], int N, int N_real, int r);
 void FFT_backward_rec(complex in[], complex out[], int N, int& m_counter);
 
 void ComplexSum(complex& z1, complex z2);
-void ComplexDec(complex& z1, complex z2);
+void ComplexSub(complex& z1, complex z2);
 void ComplexMulConst(complex& z, double c);
 void ComplexMulComplex(complex& z1, complex z2);
 void PrintComplex(complex z);
@@ -40,7 +38,7 @@ int main()
     srand(time(NULL));
     int n;
     cout << "FAST FOURIER" << endl;
-    cout << "Input n ";
+    cout << "Input n: ";
     cin >> n;
 
     int r = -1;
@@ -128,7 +126,7 @@ void FFT_forward_rec(complex in[], complex out[], int N, int& m_counter){
         out[k] = even_next[k];
         out[k + half] = even_next[k];
         ComplexSum(out[k], u);
-        ComplexDec(out[k + half], u);
+        ComplexSub(out[k + half], u);
     }
 
     delete[] even_cur; 
@@ -177,7 +175,7 @@ void FFT_backward_rec(complex in[], complex out[], int N, int& m_counter){
     for(int k = 0; k < half; k++){
         double angle = (2.0 * pi) * ((double)k / N);
         complex e;
-        e.real  =  cos(angle);    // sign = +1 (обратное)
+        e.real  =  cos(angle); 
         e.image =  sin(angle);
 
         complex u = uneven_next[k];
@@ -187,7 +185,7 @@ void FFT_backward_rec(complex in[], complex out[], int N, int& m_counter){
         out[k] = even_next[k];
         out[k + half] = even_next[k];
         ComplexSum(out[k], u);
-        ComplexDec(out[k + half], u);
+        ComplexSub(out[k + half], u);
     }
     delete[] even_cur; 
     delete[] uneven_cur;
@@ -202,7 +200,7 @@ void ComplexSum(complex& z1, complex z2){
     z1.image = z1.image + z2.image;
 }
 
-void ComplexDec(complex& z1, complex z2){
+void ComplexSub(complex& z1, complex z2){
     z1.real = z1.real - z2.real;
     z1.image = z1.image - z2.image;
 }
