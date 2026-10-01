@@ -78,7 +78,7 @@ void Fast_forward(double f[], complex A_final[], int N, int N_real, int r){
 
     complex* in = new complex[N_real];
     for(int i = 0; i < N_real; i++){
-        in[i].real  = f[i];  
+        in[i].real = f[i];  
         in[i].image = 0;
     }
 
@@ -102,7 +102,7 @@ void FFT_forward_rec(complex in[], complex out[], int N, int& m_counter){
     int half = N / 2;
 
     complex* even_cur = new complex[half];
-    complex* uneven_cur  = new complex[half];
+    complex* uneven_cur = new complex[half];
     for(int i = 0; i < half; i++){
         even_cur[i] = in[2*i];
         uneven_cur[i]  = in[2*i + 1];
@@ -116,8 +116,8 @@ void FFT_forward_rec(complex in[], complex out[], int N, int& m_counter){
     for(int k = 0; k < half; k++){
         double angle = (2.0 * pi) * ((double)k / N);
         complex e;
-        e.real  =  cos(-angle);
-        e.image =  sin(-angle);
+        e.real = cos(-angle);
+        e.image = sin(-angle);
 
         complex u = uneven_next[k];
         ComplexMulComplex(u, e);  
@@ -161,10 +161,10 @@ void FFT_backward_rec(complex in[], complex out[], int N, int& m_counter){
     int half = N / 2;
 
     complex* even_cur = new complex[half];
-    complex* uneven_cur  = new complex[half];
+    complex* uneven_cur = new complex[half];
     for(int i = 0; i < half; i++){
         even_cur[i] = in[2*i];
-        uneven_cur[i]  = in[2*i + 1];
+        uneven_cur[i] = in[2*i + 1];
     }
 
     complex* even_next = new complex[half];
@@ -175,8 +175,8 @@ void FFT_backward_rec(complex in[], complex out[], int N, int& m_counter){
     for(int k = 0; k < half; k++){
         double angle = (2.0 * pi) * ((double)k / N);
         complex e;
-        e.real  =  cos(angle); 
-        e.image =  sin(angle);
+        e.real = cos(angle); 
+        e.image = sin(angle);
 
         complex u = uneven_next[k];
         ComplexMulComplex(u, e);
