@@ -58,8 +58,12 @@ int main()
     double f[n_real], f_final[n_real];
     complex A[n_real];
 
+    // for(int i = 0; i < n; i++){ для защиты с массивом от 1 до 16
+    //     f[i] = i + 1;
+    // }
+
     for(int i = 0; i < n; i++){
-        f[i] = rand() % 100;
+        f[i] = rand()%100;
     }
 
     for(int i = n; i < n_real; i++){
