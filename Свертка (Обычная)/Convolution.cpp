@@ -39,8 +39,7 @@ int main()
         c = Conv(a, b, bn);
         cout << "c: ";
         PrintArray(c, bn);
-    }
-    
+    }   
 }
 
 int* Conv(int* a, int* b, int n){
